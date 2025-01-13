@@ -1,1 +1,11 @@
 @import './base.css';
+
+* {
+  font-family: 'Nunito Sans', Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+:root {
+  --headerHeight: 100px;
+  --orange: #ec5a12;
+  --container: 1050px;
+}

@@ -1,5 +1,7 @@
 <script setup></script>
 
 <template>
-  <main><p>Home paqdqsdqsdqsdqsge</p></main>
+  <main>
+    <footer>fooottt</footer>
+  </main>
 </template>
