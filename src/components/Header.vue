@@ -2,45 +2,67 @@
 
 <template>
   <main>
-    <header class="container">
-      <div class="mainHeader">
-        <img src="/src/assets/logo/logo.svg" alt="logo" />
-        <div>
-          <font-awesome-icon :icon="['far', 'square-plus']" />
-          <button>Déposer une annonce</button>
-          <input type="text" value="Rechercher sur leboncoin" />
-          <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
+    <header>
+      <div class="container">
+        <div class="mainHeader">
+          <img src="/src/assets/logo/logo.svg" alt="logo" />
+          <div>
+            <button><font-awesome-icon :icon="['far', 'plus-square']" />Déposer une annonce</button>
+            <div>
+              <input type="text" name="search" id="search" value="Rechercher sur leboncoin" />
+              <font-awesome-icon :icon="['fas', 'search']" />
+            </div>
+          </div>
+          <div>
+            <div>
+              <font-awesome-icon :icon="['far', 'user']" />
+              <p>Se connecter</p>
+            </div>
+            <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
+          </div>
         </div>
-        <div>
-          <font-awesome-icon :icon="['far', 'user']" />
-          <p>Se connecter</p>
+        <div class="navHeader">
+          <span>Immobilier</span>
+          <font-awesome-icon :icon="['fas', 'circle']" />
+          <span>Véhicules</span>
+          <font-awesome-icon :icon="['fas', 'circle']" />
+          <span>Locations de vacances</span>
+          <font-awesome-icon :icon="['fas', 'circle']" />
+          <span>Emploi</span>
+          <font-awesome-icon :icon="['fas', 'circle']" />
+          <span>Mode</span>
+          <font-awesome-icon :icon="['fas', 'circle']" />
+          <span>Maison & Jardin</span>
+          <font-awesome-icon :icon="['fas', 'circle']" />
+          <span>Famille</span>
+          <font-awesome-icon :icon="['fas', 'circle']" />
+          <span>Electronique</span>
+          <font-awesome-icon :icon="['fas', 'circle']" />
+          <span>Loisirs</span>
+          <font-awesome-icon :icon="['fas', 'circle']" />
+          <span>Autres</span>
         </div>
-      </div>
-      <div class="navHeader">
-        <p>Immobilier</p>
-        <p>Véhicules</p>
-        <p>Locations de vacances</p>
-        <p>Emploi</p>
-        <p>Mode</p>
-        <p>Maison & Jardin</p>
-        <p>Famille</p>
-        <p>Electronique</p>
-        <p>Loisirs</p>
-        <p>Autres</p>
       </div>
     </header>
   </main>
 </template>
 <style scoped>
 header {
+  margin-bottom: 30px;
+}
+header > div {
   border: solid red 1px;
   height: var(--headerHeight);
   display: flex;
   flex-direction: column;
   padding: 10px;
 }
+.container > div {
+  display: flex;
+}
 .container {
   width: auto 1050px;
+  /* background-color: red; */
 }
 .mainHeader {
   display: flex;
@@ -58,7 +80,7 @@ header {
   flex: 1;
 }
 img {
-  height: 30px;
+  width: 140px;
 }
 button {
   background-color: var(--orange);
@@ -69,6 +91,7 @@ button {
   font-weight: bold;
   font-size: 16px;
   margin-right: 20px;
+  cursor: pointer;
 }
 input {
   height: 30px;
@@ -86,5 +109,8 @@ input {
 }
 .mainHeader div:last-of-type > p {
   font-size: 12px;
+}
+svg {
+  font-size: 15px;
 }
 </style>

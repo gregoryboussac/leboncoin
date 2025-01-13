@@ -5,7 +5,13 @@
   box-sizing: border-box;
 }
 :root {
-  --headerHeight: 100px;
+  --headerHeight: 110px;
   --orange: #ec5a12;
-  --container: 1050px;
+  --orangeLight: #fee9dd;
+  --container: 1055px;
+}
+.container {
+  width: 1055px;
+  margin: 0 auto;
+  height: 100%;
 }
