@@ -14,9 +14,16 @@ body {
   --blue: #094170;
   --blueLight: #f4f9fd;
   --container: 1055px;
+  --darkGrey: #627c93;
+  --medGrey: grey;
+  --brown: #89380f;
 }
 .container {
   width: 1055px;
   margin: 0 auto;
   height: 100%;
+}
+a {
+  color: inherit;
+  text-decoration: none;
 }

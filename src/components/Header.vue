@@ -1,12 +1,16 @@
 <script setup>
+import HomeView from '@/views/HomeView.vue'
 import BtnPublishOffer from './BtnPublishOffer.vue'
+import { RouterLink } from 'vue-router'
 </script>
 
 <template>
   <header>
     <div class="container">
       <div class="TopPart">
-        <img src="/src/assets/logo/logo.svg" alt="logo" />
+        <RouterLink :to="{ name: 'home' }">
+          <img src="/src/assets/logo/logo.svg" alt="logo" />
+        </RouterLink>
         <div class="middlePart">
           <BtnPublishOffer />
           <div>

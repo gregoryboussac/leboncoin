@@ -36,6 +36,9 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+main {
+  min-height: calc(100vh - var(--headerHeight) - var(--footerHeight));
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -48,9 +51,9 @@ onMounted(async () => {
   margin-bottom: 30px;
 }
 .offersList {
-  border: solid purple 1px;
+  /* border: solid purple 1px; */
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 30px 15px;
 }
 </style>
