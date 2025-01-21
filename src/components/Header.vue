@@ -57,6 +57,10 @@ header {
   height: var(--headerHeight);
   /* margin-bottom: 30px; */
   border-bottom: 1px grey solid;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  background-color: white;
 }
 
 .container > div {

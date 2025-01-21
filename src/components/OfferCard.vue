@@ -9,6 +9,24 @@ const props = defineProps({
 const formatedDates = computed(() => {
   return props.offerInfos.attributes.publishedAt.split('T')[0].split('-').reverse().join('/')
 })
+
+const formatedPrice = computed(() => {
+  const price = props.offerInfos.attributes.price
+
+  const priceStr = price.toString()
+
+  let newStr = ''
+
+  for (let i = priceStr.length - 1; i >= 0; i--) {
+    if (i === priceStr.length - 4 || i === priceStr.length - 7) {
+      newStr = priceStr[i] + ' ' + newStr
+    } else {
+      newStr = priceStr[i] + newStr
+    }
+  }
+
+  return newStr
+})
 </script>
 <template>
   <RouterLink :to="{ name: 'offer', params: { id: offerInfos.id } }" class="offerCard">
@@ -25,7 +43,7 @@ const formatedDates = computed(() => {
 
       <img :src="offerInfos.attributes.pictures.data[0].attributes.url" alt="" />
       <p>{{ offerInfos.attributes.title }}</p>
-      <p>{{ offerInfos.attributes.price }} €</p>
+      <p>{{ formatedPrice }} €</p>
 
       <div>
         <p class="date">{{ formatedDates }}</p>

@@ -6,6 +6,9 @@
 body {
   font-family: 'Nunito Sans', Arial, Helvetica, sans-serif;
 }
+main {
+  margin-top: var(--headerHeight);
+}
 :root {
   --headerHeight: 110px;
   --footerHeight: 80px;

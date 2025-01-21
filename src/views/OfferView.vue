@@ -2,10 +2,12 @@
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import { computed } from 'vue'
+import { useCycleList, usePrevious } from '@vueuse/core'
 
 const props = defineProps({
   id: String,
 })
+
 const offerInfos = ref(null)
 // console.log('offerview > ID>>>', props.id)
 
@@ -24,6 +26,15 @@ onMounted(async () => {
     console.log('catch offerview', error)
   }
 })
+
+const cycleList = computed(() => {
+  if (offerInfos.value.attributes.pictures.data) {
+    const { state, next, prev } = useCycleList(offerInfos.value.attributes.pictures.data)
+    return { state, next, prev }
+  } else {
+    return {}
+  }
+})
 </script>
 
 <template>
@@ -31,7 +42,19 @@ onMounted(async () => {
     <p class="container" v-if="offerInfos === null">Chargement en Cours ...</p>
     <div class="container" v-else>
       <div class="leftCol">
-        <img :src="offerInfos.attributes.pictures.data[0].attributes.url" alt="product" />
+        <div class="caroussel">
+          <font-awesome-icon
+            :icon="['fas', 'chevron-left']"
+            @click="cycleList.prev()"
+            v-if="offerInfos.attributes.pictures.data?.length > 1"
+          />
+          <img :src="cycleList.state.value.attributes.url" alt="product" />
+          <font-awesome-icon
+            :icon="['fas', 'chevron-right']"
+            @click="cycleList.next()"
+            v-if="offerInfos.attributes.pictures.data?.length > 1"
+          />
+        </div>
         <p class="title">{{ offerInfos.attributes.title }}</p>
         <p class="price">{{ offerInfos.attributes.price }} €</p>
         <p class="date">{{ formatedDate }}</p>
@@ -69,7 +92,6 @@ onMounted(async () => {
 </template>
 <style scoped>
 main {
-  margin-top: 30px;
   min-height: calc(100vh - var(--headerHeight) - var(--footerHeight));
 }
 .container {
@@ -87,6 +109,14 @@ main {
   width: 100%;
   object-fit: contain;
   margin-bottom: 40px;
+}
+.caroussel {
+  display: flex;
+  align-items: center;
+}
+.caroussel svg {
+  font-size: 18px;
+  cursor: pointer;
 }
 .title {
   font-weight: bold;
