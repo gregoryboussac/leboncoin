@@ -2,6 +2,10 @@
 import HomeView from '@/views/HomeView.vue'
 import BtnPublishOffer from './BtnPublishOffer.vue'
 import { RouterLink } from 'vue-router'
+import { inject, ref } from 'vue'
+
+const GlobalStore = inject('GlobalStore')
+// console.log('retour globalStore >>>', GlobalStore.userToken)
 </script>
 
 <template>
@@ -20,13 +24,18 @@ import { RouterLink } from 'vue-router'
         </div>
 
         <div class="connectionPart">
-          <div>
+          <RouterLink :to="{ name: 'login' }" v-if="!GlobalStore.userToken.value">
             <font-awesome-icon :icon="['far', 'user']" />
             <p>Se connecter</p>
-          </div>
-          <!-- <font-awesome-icon :icon="['fas', 'sign-out-alt']" /> -->
+          </RouterLink>
+          <font-awesome-icon
+            :icon="['fas', 'sign-out-alt']"
+            v-else
+            @click="GlobalStore.changeToken('')"
+          />
         </div>
       </div>
+
       <div class="BottomPart">
         <span>Immobilier</span>
         <font-awesome-icon :icon="['fas', 'circle']" />
@@ -95,7 +104,7 @@ img {
 }
 .middlePart > div > svg {
   background-color: var(--orange);
-  color: white;
+  color: black;
   padding: 7px;
   border-radius: 5px;
   box-sizing: content-box;
@@ -113,9 +122,12 @@ input:focus {
 }
 /* --------------------- */
 
-.connectionPart > div {
+.connectionPart > a {
+  /* border: solid 3px rgb(255, 225, 0);
+  background-color: red; */
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 10px;
   font-size: 12px;
