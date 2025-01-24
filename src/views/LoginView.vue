@@ -8,6 +8,7 @@ const password = ref('')
 
 const isSubmitting = ref(false)
 const errorMessage = ref('')
+const displayPassword = ref(false)
 
 const GlobalStore = inject('GlobalStore')
 const router = useRouter()
@@ -46,45 +47,49 @@ const handleSubmit = async () => {
 <template>
   <main>
     <div class="container">
-      <h1>Bonjour !</h1>
-      <h2>Connectez-vous pour découvrir toutes nos fonctionnalités.</h2>
-
       <form @submit.prevent="handleSubmit">
-        <div class="container">
-          <label for="email"> E-mail <sup>*</sup> </label>
-          <div>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              v-model="email"
-              @input="cleanErrorMessage"
-            />
-          </div>
+        <div>
+          <h1>Bonjour !</h1>
+          <h2>Connectez-vous pour découvrir toutes nos fonctionnalités.</h2>
         </div>
 
-        <div>
-          <label for="password"> Mot de passe <sup>*</sup> </label>
-          <div>
+        <label for="email">
+          <span> E-mail <sup>*</sup> </span>
+          <input type="email" name="email" id="email" v-model="email" @input="cleanErrorMessage"
+        /></label>
+
+        <label for="password">
+          <span> Mot de passe <sup>*</sup> </span>
+          <div class="inputPassword">
             <input
-              type="password"
+              :type="displayPassword ? 'text' : 'password'"
               name="password"
               id="password"
               v-model="password"
               @input="cleanErrorMessage"
             />
-            <font-awesome-icon :icon="['far', 'eye-slash']" />
-            <font-awesome-icon :icon="['far', 'eye']" />
+            <div>
+              <font-awesome-icon
+                :icon="['far', 'eye-slash']"
+                v-if="displayPassword === false"
+                @click="displayPassword = !displayPassword"
+              />
+              <font-awesome-icon
+                :icon="['far', 'eye']"
+                v-else
+                @click="displayPassword = !displayPassword"
+              />
+            </div>
           </div>
-        </div>
+        </label>
         <p v-if="isSubmitting">Connexion en cours...</p>
         <button v-else>Se connecter <font-awesome-icon :icon="['fas', 'arrow-right']" /></button>
-        <p>{{ errorMessage }}</p>
+        <p v-if="errorMessage" class="textError">{{ errorMessage }}</p>
 
-        <p>Envie de nous rejoindre ?</p>
-        <RouterLink :to="{ name: 'signup' }">
-          <span>Créer un compte</span>
-        </RouterLink>
+        <p>
+          Envie de nous rejoindre ?
+          <RouterLink :to="{ name: 'signup' }"> Créer un compte </RouterLink>
+        </p>
       </form>
     </div>
   </main>
@@ -92,6 +97,90 @@ const handleSubmit = async () => {
 
 <style scoped>
 main {
-  min-height: calc(100vh - var(--headerHeight) - var(--footerHeight));
+  height: calc(100vh - var(--headerHeight) - var(--footerHeight));
+}
+.container {
+  /* border: 2px solid yellow; */
+  background-image: url('../assets/logo/illustration.png');
+  background-size: contain;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+form {
+  /* border: 1px solid red; */
+  height: 490px;
+  width: 480px;
+  padding: 30px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 0 7px var(--medGrey);
+  border-radius: 15px;
+}
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+input {
+  height: 45px;
+  border-radius: 15px;
+  padding-left: 10px;
+  border-radius: 15px;
+  border: 1px solid black;
+}
+.inputPassword {
+  border: 1px solid black;
+  display: flex;
+  border-radius: 15px;
+}
+.inputPassword > input {
+  flex: 1;
+  border: none;
+}
+.inputPassword > div {
+  border-left: 1px solid black;
+  display: flex;
+  align-items: center;
+  width: 40px;
+}
+input:focus {
+  outline: none;
+}
+
+button {
+  background-color: var(--orange);
+  color: white;
+  font-size: 13px;
+  border-radius: 15px;
+  border: none;
+  height: 45px;
+  font-weight: bold;
+}
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+h2 {
+  margin-bottom: 15px;
+}
+svg {
+  margin-left: 10px;
+}
+p:last-child {
+  text-align: center;
+}
+a {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.textError {
+  text-align: center;
+  color: var(--orange);
 }
 </style>

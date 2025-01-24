@@ -1,6 +1,7 @@
 <script setup>
 import BtnPublishOffer from './BtnPublishOffer.vue'
 </script>
+
 <template>
   <div class="entete">
     <img src="/src/assets/logo/onde-corail.svg" alt="cloud" />
@@ -11,6 +12,7 @@ import BtnPublishOffer from './BtnPublishOffer.vue'
     <img src="/src/assets/logo/feuille-bleue.svg" alt="flower" />
   </div>
 </template>
+
 <style scoped>
 .entete {
   display: flex;
