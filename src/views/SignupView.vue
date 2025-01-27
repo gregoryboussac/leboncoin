@@ -38,8 +38,8 @@ const handleSubmit = async () => {
       // console.log('réponse >>>> ', data)
       // console.log('JWT token >>>> ', data.jwt)
 
-      GlobalStore.changeToken(data.jwt)
-      GlobalStore.changeUserName(data.user.username)
+      GlobalStore.changeUserInfos({ username: data.user.username, token: data.jwt })
+      $cookies.set('userInfos', { username: data.user.username, token: data.jwt })
 
       router.push({ name: 'home' })
     } catch (error) {

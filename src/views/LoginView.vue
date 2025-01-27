@@ -26,11 +26,10 @@ const handleSubmit = async () => {
         `https://site--strapileboncoin--2m8zk47gvydr.code.run/api/auth/local`,
         { identifier: email.value, password: password.value },
       )
-      // console.log('réponse serveur>>>> ', data)
+      console.log('réponse serveur>>>> ', data)
 
-      GlobalStore.changeToken(data.jwt)
-      GlobalStore.changeUserName(data.user.username)
-
+      GlobalStore.changeUserInfos({ username: data.user.username, token: data.jwt })
+      $cookies.set('userInfos', { username: data.user.username, token: data.jwt })
       router.push({ name: 'home' })
       router
     } catch (error) {

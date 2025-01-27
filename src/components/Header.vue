@@ -6,6 +6,10 @@ import { inject, ref } from 'vue'
 
 const GlobalStore = inject('GlobalStore')
 // console.log('retour globalStore >>>', GlobalStore.userToken)
+const disconnetUser = () => {
+  GlobalStore.changeUserInfos(null)
+  $cookies.remove('userInfos')
+}
 </script>
 
 <template>
@@ -24,15 +28,18 @@ const GlobalStore = inject('GlobalStore')
         </div>
 
         <div class="connectionPart">
-          <RouterLink :to="{ name: 'login' }" v-if="!GlobalStore.userToken.value">
+          <RouterLink :to="{ name: 'login' }" v-if="!GlobalStore.userInfos.value">
             <font-awesome-icon :icon="['far', 'user']" />
             <p>Se connecter</p>
           </RouterLink>
-          <font-awesome-icon
-            :icon="['fas', 'sign-out-alt']"
-            v-else
-            @click="GlobalStore.changeToken('')"
-          />
+
+          <div v-else class="disconnectPart">
+            <div>
+              <font-awesome-icon :icon="['far', 'user']" />
+              <p>{{ GlobalStore.userInfos.value.username }}</p>
+            </div>
+            <font-awesome-icon :icon="['fas', 'sign-out-alt']" @click="disconnetUser" />
+          </div>
         </div>
       </div>
 
@@ -135,6 +142,18 @@ input:focus {
 
 .connectionPart svg {
   font-size: 18px;
+}
+/* --------------------- */
+.disconnectPart {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.disconnectPart > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 /* --------BOTTOM PART------------- */
