@@ -5,7 +5,7 @@ import { computed } from 'vue'
 const props = defineProps({
   offerInfos: Object,
 })
-// console.log(props.offerInfos.attributes.owner.data)
+console.log(props.offerInfos.attributes.owner.data)
 const formatedDates = computed(() => {
   return props.offerInfos.attributes.publishedAt.split('T')[0].split('-').reverse().join('/')
 })
