@@ -58,6 +58,7 @@ const formatedPrice = computed(() => {
 </template>
 <style scoped>
 .offerCard {
+  /* border: solid 1px red; */
   width: calc((100% - 60px) / 5);
 }
 .ownerPart {

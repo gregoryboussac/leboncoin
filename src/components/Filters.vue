@@ -36,31 +36,37 @@ const handleSubmit = () => {
 
 <template>
   <form @submit.prevent="handleSubmit">
-    <div>Prix</div>
     <div>
-      <input
-        type="number"
-        name="priceMin"
-        id="priceMin"
-        placeholder="Minimum"
-        min="0"
-        v-model="priceMin"
-      />
-      <label for="priceMin"> €</label>
-    </div>
-    <div>
-      <input
-        type="number"
-        name="priceMax"
-        id="priceMax"
-        placeholder="Maximum"
-        v-model="priceMax"
-        :min="priceMin"
-      />
-      <label for="priceMax"> €</label>
+      <p>Prix</p>
+
+      <div class="priceBloc">
+        <div>
+          <input
+            type="number"
+            name="priceMin"
+            id="priceMin"
+            placeholder="Minimum"
+            min="0"
+            v-model="priceMin"
+          />
+          <label for="priceMin"> €</label>
+        </div>
+
+        <div>
+          <input
+            type="number"
+            name="priceMax"
+            id="priceMax"
+            placeholder="Maximum"
+            v-model="priceMax"
+            :min="priceMin"
+          />
+          <label for="priceMax"> €</label>
+        </div>
+      </div>
     </div>
 
-    <div>
+    <div class="sortBloc">
       <p>Tri</p>
       <div>
         <label>
@@ -71,19 +77,77 @@ const handleSubmit = () => {
           Prix décroissants
           <input type="radio" value="price:desc" id="pricedesc" v-model="sort" />
         </label>
+
         <label>
           Pas de tri
           <input type="radio" value="" id="noSort" v-model="sort" />
         </label>
       </div>
     </div>
+
     <button>Rechercher</button>
   </form>
 </template>
+
 <style scoped>
 form {
   display: flex;
-  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 40px;
+  width: 100%;
+  /* border: solid 1px green; */
+}
+p {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+/* ______priceBloc */
+
+.priceBloc {
+  display: flex;
+  gap: 10px;
+}
+.priceBloc > div {
+  height: 43px;
+  display: flex;
+}
+.priceBloc input {
+  border: none;
+  border: solid 1px var(--blueLight);
+  border-radius: 15px 0 0 15px;
+  height: 100%;
+  width: 150px;
+  padding-left: 10px;
+}
+.priceBloc input::placeholder {
+  font-size: 16px;
+}
+.priceBloc label {
+  height: 100%;
+  width: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px var(--blueLight);
+  border-radius: 0 15px 15px 0;
+  border-left: none;
+}
+
+/* ______sortBloc */
+
+.sortBloc > div {
+  display: flex;
+  gap: 15px;
+}
+
+/* ______button */
+button {
+  background-color: var(--orange);
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 7px 10px;
+  border-radius: 10px;
 }
 </style>

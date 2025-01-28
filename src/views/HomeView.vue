@@ -80,6 +80,7 @@ main {
 }
 .offersList {
   /* border: solid purple 1px; */
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 30px 15px;
