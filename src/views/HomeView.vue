@@ -4,10 +4,13 @@ import { onMounted, ref, watchEffect } from 'vue'
 import OfferCard from '@/components/OfferCard.vue'
 import TimeToSell from '@/components/TimeToSell.vue'
 import Filters from '@/components/Filters.vue'
+import Pagination from '@/components/Pagination.vue'
+
+const props = defineProps(['sort', 'pricemin', 'pricemax', 'title', 'page'])
+// console.log('props >>>>', props)
 
 const offersList = ref([])
-const props = defineProps(['sort', 'pricemin', 'pricemax'])
-// console.log('props >>>>', props)
+const numbOfPages = ref(1)
 
 onMounted(() => {
   watchEffect(async () => {
@@ -22,10 +25,12 @@ onMounted(() => {
       }
 
       const { data } = await axios.get(
-        `https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers?populate[0]=pictures&populate[1]=owner.avatar${priceFilters}&sort=${props.sort}`,
+        `https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers?populate[0]=pictures&populate[1]=owner.avatar${priceFilters}&sort=${props.sort}&filters[title][$containsi]=${props.title}&pagination[page]=${props.page}&pagination[pageSize]=10`,
       )
-      // console.log(data.data)
+      console.log('reotur serveur >>>', data.meta.pagination.pageCount)
+
       offersList.value = data.data
+      numbOfPages.value = data.meta.pagination.pageCount
     } catch (error) {
       console.log(error)
     }
@@ -37,7 +42,7 @@ onMounted(() => {
   <main>
     <p class="container" v-if="offersList.length === 0">Chargement en Cours ...</p>
     <div class="container" v-else>
-      <Filters :sort="sort" :pricemin="pricemin" :pricemax="pricemax" />
+      <Filters :sort="sort" :pricemin="pricemin" :pricemax="pricemax" :title="title" :page="page" />
 
       <p>Des millions de petites annonces et autant d'occasions de se faire plaisir</p>
 
@@ -46,6 +51,14 @@ onMounted(() => {
       <div class="offersList">
         <OfferCard v-for="offer in offersList" :key="offer.id" :offerInfos="offer" />
       </div>
+      <pagination
+        :sort="sort"
+        :pricemin="pricemin"
+        :pricemax="pricemax"
+        :title="title"
+        :page="page"
+        :numbOfPages="numbOfPages"
+      />
     </div>
   </main>
 </template>

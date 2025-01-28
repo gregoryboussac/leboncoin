@@ -4,8 +4,8 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-const props = defineProps(['sort', 'pricemin', 'pricemax'])
-// console.log('props>>>', props)
+const props = defineProps(['sort', 'pricemin', 'pricemax', 'title', 'page'])
+console.log('props>>>', props)
 
 const priceMin = ref(props.pricemin)
 const priceMax = ref(props.pricemax)
@@ -29,8 +29,7 @@ const handleSubmit = () => {
   } else {
     delete queries.sort
   }
-
-  // penser a revenir à un poru la page
+  queries.page = 1
   router.push({ name: 'home', query: queries })
 }
 </script>
@@ -74,7 +73,7 @@ const handleSubmit = () => {
         </label>
         <label>
           Pas de tri
-          <input type="radio" value="none" id="noSort" v-model="sort" />
+          <input type="radio" value="" id="noSort" v-model="sort" />
         </label>
       </div>
     </div>

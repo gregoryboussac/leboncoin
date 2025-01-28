@@ -1,14 +1,32 @@
 <script setup>
 import HomeView from '@/views/HomeView.vue'
 import BtnPublishOffer from './BtnPublishOffer.vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { inject, ref } from 'vue'
 
 const GlobalStore = inject('GlobalStore')
 // console.log('retour globalStore >>>', GlobalStore.userToken)
+const route = useRoute()
+const router = useRouter()
+const search = ref('')
+
 const disconnetUser = () => {
   GlobalStore.changeUserInfos(null)
   $cookies.remove('userInfos')
+}
+
+const handleSubmit = () => {
+  console.log('handlesubmitsearch >>>', search.value, route.query)
+
+  const queries = { ...route.query }
+  if (search.value) {
+    queries.title = search.value
+  } else {
+    delete queries.title
+  }
+
+  queries.page = 1
+  router.push({ name: 'home', query: queries })
 }
 </script>
 
@@ -21,10 +39,19 @@ const disconnetUser = () => {
         </RouterLink>
         <div class="middlePart">
           <BtnPublishOffer />
-          <div>
-            <input type="text" name="search" id="search" placeholder="Rechercher sur leboncoin" />
-            <font-awesome-icon :icon="['fas', 'search']" />
-          </div>
+
+          <form @submit.prevent="handleSubmit">
+            <input
+              type="text"
+              name="search"
+              id="search"
+              placeholder="Rechercher sur leboncoin"
+              v-model="search"
+            />
+            <button>
+              <font-awesome-icon :icon="['fas', 'search']" />
+            </button>
+          </form>
         </div>
 
         <div class="connectionPart">
@@ -102,19 +129,24 @@ img {
   justify-content: center;
   gap: 20px;
 }
-.middlePart > div {
+.middlePart > form {
   display: flex;
   align-items: center;
   background-color: var(--blueLight);
   border-radius: 10px;
   padding: 7px;
 }
-.middlePart > div > svg {
+.middlePart > form svg {
   background-color: var(--orange);
   color: black;
   padding: 7px;
   border-radius: 5px;
   box-sizing: content-box;
+}
+.middlePart > form button {
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  cursor: pointer;
 }
 input {
   width: 250px;

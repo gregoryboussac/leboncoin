@@ -5,7 +5,7 @@ import { computed } from 'vue'
 const props = defineProps({
   offerInfos: Object,
 })
-console.log(props.offerInfos.attributes.owner.data)
+// console.log(props.offerInfos.attributes.owner.data)
 const formatedDates = computed(() => {
   return props.offerInfos.attributes.publishedAt.split('T')[0].split('-').reverse().join('/')
 })
@@ -41,7 +41,11 @@ const formatedPrice = computed(() => {
         <p>{{ offerInfos.attributes.owner.data.attributes.username }}</p>
       </div>
 
-      <img :src="offerInfos.attributes.pictures.data[0].attributes.url" alt="" />
+      <img
+        :src="offerInfos.attributes.pictures.data[0].attributes.url"
+        alt=""
+        v-if="offerInfos.attributes.owner.data.attributes.avatar.data"
+      />
       <p>{{ offerInfos.attributes.title }}</p>
       <p>{{ formatedPrice }} €</p>
 
