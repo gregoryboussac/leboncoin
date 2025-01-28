@@ -114,7 +114,7 @@ p {
 }
 .priceBloc input {
   border: none;
-  border: solid 1px var(--blueLight);
+  border: solid 1px var(--lightGrey);
   border-radius: 15px 0 0 15px;
   height: 100%;
   width: 150px;
@@ -129,7 +129,7 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: solid 1px var(--blueLight);
+  border: solid 1px var(--lightGrey);
   border-radius: 0 15px 15px 0;
   border-left: none;
 }

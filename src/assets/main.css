@@ -19,6 +19,7 @@ main {
   --container: 1055px;
   --darkGrey: #627c93;
   --medGrey: grey;
+  --lightGrey: rgb(223, 223, 223);
   --brown: #89380f;
 }
 .container {
