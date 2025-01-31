@@ -1,9 +1,14 @@
-<script setup></script>
+<script setup>
+import PublishView from '@/views/PublishView.vue'
+import { RouterLink } from 'vue-router'
+</script>
 
 <template>
   <button>
-    <font-awesome-icon :icon="['far', 'plus-square']" />
-    Déposer une annonce
+    <RouterLink :to="{ name: 'publish' }">
+      <font-awesome-icon :icon="['far', 'plus-square']" />
+      Déposer une annonce
+    </RouterLink>
   </button>
 </template>
 

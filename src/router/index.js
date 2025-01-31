@@ -49,7 +49,7 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
   const GlobalStore = inject('GlobalStore')
-  if (to.meta.requireAuth && !GlobalStore.userInfos.value.token) {
+  if (to.meta.requireAuth && !GlobalStore.userInfos.value?.token) {
     return { name: 'login' }
   }
 })

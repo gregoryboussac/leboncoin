@@ -71,6 +71,7 @@ const cycleList = computed(() => {
         <div class="owner">
           <div>
             <img
+              v-if="offerInfos.attributes.owner.data.attributes.avatar.data"
               :src="offerInfos.attributes.owner.data.attributes.avatar.data.attributes.url"
               alt="avatar"
             />
