@@ -21,6 +21,8 @@ import {
   faChevronLeft,
   faAsterisk,
   faArrowRight,
+  faCamera,
+  faCheck,
 } from '@fortawesome/free-solid-svg-icons'
 
 /* Import de l'icône de type 'regular' */
@@ -52,6 +54,8 @@ library.add(
   faEyeSlash,
   faArrowRight,
   faEye,
+  faCamera,
+  faCheck,
 )
 
 const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon)

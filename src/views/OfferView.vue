@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import { computed } from 'vue'
 import { useCycleList, usePrevious } from '@vueuse/core'
+import { RouterLink } from 'vue-router'
 
 const props = defineProps({
   id: String,
@@ -20,7 +21,7 @@ onMounted(async () => {
     const { data } = await axios.get(
       `https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers/${props.id}?populate[0]=pictures&populate[1]=owner.avatar`,
     )
-    console.log('Offerview data >>>', data.data.attributes)
+    // console.log('Offerview data >>>', data.data.attributes)
     offerInfos.value = data.data
   } catch (error) {
     console.log('catch offerview', error)
@@ -84,18 +85,24 @@ const cycleList = computed(() => {
         </div>
 
         <div class="btnPart">
-          <button>Acheter</button>
+          <button>
+            <RouterLink :to="{ name: 'payment', params: { id: offerInfos.id } }"
+              >Acheter</RouterLink
+            >
+          </button>
           <button>Message</button>
         </div>
       </div>
     </div>
   </main>
 </template>
+
 <style scoped>
 main {
   min-height: calc(100vh - var(--headerHeight) - var(--footerHeight));
 }
 .container {
+  padding-top: 40px;
   /* border: solid 2px rgb(255, 0, 221); */
   display: flex;
   gap: 20px;

@@ -102,6 +102,8 @@ const emptyErrorMessage = () => {
         <textarea
           name="description"
           id="description"
+          cols="30"
+          rows="10"
           v-model="description"
           @input="emptyErrorMessage"
         ></textarea>
@@ -115,26 +117,152 @@ const emptyErrorMessage = () => {
         </p>
 
         <label for="price">Votre prix de vente</label>
-        <div>
+        <div class="priceBloc">
           <input type="number" name="price" id="price" v-model="price" @input="emptyErrorMessage" />
           <p>€</p>
         </div>
 
+        <label class="fileInput" for="pictures">
+          <font-awesome-icon :icon="['fas', 'camera']" />
+          <span>Sélectionnez jusqu'à 10 photos </span>
+        </label>
         <input type="file" name="pictures" id="pictures" multiple @input="selectPictures" />
-        <div v-if="pictures">
+
+        <div v-if="pictures" class="previews">
           <img v-for="url in imagesPreview" :src="url" alt="" />
         </div>
 
-        <p v-if="errorMessage">{{ errorMessage }}</p>
-
         <p v-if="isPublishing">Envoi en cours ...</p>
         <button>déposer mon annonce</button>
+        <p v-if="errorMessage" class="errorMessage">{{ errorMessage }}</p>
       </form>
     </div>
   </main>
 </template>
+
 <style scoped>
-img {
-  width: 300px;
+main {
+  background-color: var(--blueLight);
+  padding: 40px 0;
+}
+.container {
+  padding: 20px;
+  background-color: white;
+  border-radius: 20px;
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+form {
+  /* width: 770px; */
+  display: flex;
+  flex-direction: column;
+}
+label {
+  margin: 30px 0 10px 0;
+}
+p {
+  font-size: 12px;
+  color: var(--medGrey);
+  margin-top: 5px;
+  width: 770px;
+}
+
+input,
+textarea {
+  border: 1px solid var(--medGrey);
+  border-radius: 15px;
+  width: 770px;
+}
+input[type='text'] {
+  height: 45px;
+}
+.priceBloc {
+  height: 45px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.priceBloc input {
+  height: 100%;
+  width: 190px;
+  border: 1px solid var(--medGrey);
+  border-radius: 15px 0 0 15px;
+}
+.priceBloc p {
+  height: 100%;
+  width: 45px;
+  border: 1px solid var(--medGrey);
+  border-left: none;
+  border-radius: 0 15px 15px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0px;
+  color: inherit;
+  font-size: inherit;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox
+input[type='number'] {
+  -moz-appearance: textfield;
+} */
+
+input[type='file'] {
+  display: none;
+}
+.fileInput {
+  border: 1px solid black;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  padding: 10px;
+  color: var(--blue);
+}
+.fileInput svg {
+  font-size: 34px;
+}
+.fileInput span {
+  text-align: center;
+}
+button {
+  color: white;
+  background-color: var(--orange);
+  border-radius: 15px;
+  padding: 10px 15px;
+  border: none;
+  align-self: flex-end;
+  margin-top: 40px;
+}
+.previews {
+  /* border: 1px solid black; */
+  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.previews img {
+  width: calc((100% - 40px) / 5);
+  aspect-ratio: 1/1;
+  border-radius: 10px;
+  object-fit: cover;
+}
+.errorMessage {
+  font-size: 16px;
+  color: var(--orange);
+  text-align: center;
 }
 </style>

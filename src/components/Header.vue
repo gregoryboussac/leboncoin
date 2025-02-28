@@ -13,6 +13,7 @@ const search = ref('')
 const disconnetUser = () => {
   GlobalStore.changeUserInfos(null)
   $cookies.remove('userInfos')
+  router.push({ name: 'home' })
 }
 
 const handleSubmit = () => {

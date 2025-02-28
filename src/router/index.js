@@ -4,6 +4,7 @@ import { inject } from 'vue'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignupView from '../views/SignupView.vue'
+import PaymentView from '@/views/PaymentView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,13 +45,22 @@ const router = createRouter({
       component: () => import('../views/PublishView.vue'),
       meta: { requireAuth: true },
     },
+    {
+      path: '/payment/:id',
+      name: 'payment',
+      props: true,
+      meta: { requireAuth: true },
+      component: PaymentView,
+    },
   ],
 })
 
 router.beforeEach((to, from) => {
+  // console.log('to>>>', to)
+
   const GlobalStore = inject('GlobalStore')
   if (to.meta.requireAuth && !GlobalStore.userInfos.value?.token) {
-    return { name: 'login' }
+    return { name: 'login', query: { redirect: to.path } }
   }
 })
 
