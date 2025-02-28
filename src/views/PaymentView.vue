@@ -1,21 +1,26 @@
 <script setup>
 import { onMounted, ref, computed, onBeforeMount, inject } from 'vue'
 import axios from 'axios'
+import { useRouter } from 'vue-router'
 import { loadStripe } from '@stripe/stripe-js'
+import { errorMessages } from 'vue/compiler-sfc'
 
 const GlobalStore = inject('GlobalStore')
+const router = useRouter()
 
 const isLoading = ref(true)
 const offerInfos = ref(null)
 const option = ref('faceToFace')
 const cardElement = ref(null)
+const isProcessing = ref(false)
+const errorMessage = ref('')
 
 const firstname = ref('')
 const lastname = ref('')
 const phone = ref('')
 
 const stripePromise = loadStripe(
-  'pk_test_51QsKwz2eDcug4SPIrtSarCfETliTxZuN8AwcfZMxVzgkFAy1nNYUQ1t1RQj5BqHxkNhO81JWR5wXsjUpTOF7XvTe00EXj3Okha',
+  'pk_test_51HCObyDVswqktOkX6VVcoA7V2sjOJCUB4FBt3EOiAdSz5vWudpWxwcSY8z2feWXBq6lwMgAb5IVZZ1p84ntLq03H00LDVc2RwP',
 )
 const props = defineProps({
   id: String,
@@ -51,6 +56,10 @@ const total = computed(() => {
 })
 
 const handlePayment = async () => {
+  if (!firstname.value || !lastname.value) {
+    return (errorMessage.value = 'Veuillez rentrer vos nom et prénom')
+  }
+  isProcessing.value = true
   try {
     const stripe = await stripePromise
 
@@ -67,9 +76,17 @@ const handlePayment = async () => {
       { headers: { Authorization: `Bearer ${GlobalStore.userInfos.value.token} ` } },
     )
     console.log('date - payment>>>', data)
+
+    if (data.status === 'succeeded') {
+      alert(
+        `Paiement de ${total.value} € validé pour l'achat du poduit ${offerInfos.value.attributes.title} par ${firstname.value} ${lastname.value} `,
+      )
+      router.replace({ name: 'home' })
+    }
   } catch (error) {
-    console.log(error)
+    console.log(error.response)
   }
+  isProcessing.value = false
 }
 </script>
 
@@ -90,10 +107,18 @@ const handlePayment = async () => {
               name="firstname"
               placeholder="Prénom"
               v-model="firstname"
+              @input="errorMessage = ''"
             />
 
             <label for="lastname">Nom:</label>
-            <input type="text" id="lastname" name="lastname" placeholder="Nom" v-model="lastname" />
+            <input
+              type="text"
+              id="lastname"
+              name="lastname"
+              placeholder="Nom"
+              v-model="lastname"
+              @input="errorMessage = ''"
+            />
 
             <label for="phone">Téléphone :</label>
             <input type="text" id="phone" name="phone" placeholder="Téléphone" v-model="phone" />
@@ -111,7 +136,8 @@ const handlePayment = async () => {
 
             <div id="card-element"></div>
 
-            <button @click="handlePayment">payer</button>
+            <button @click="handlePayment" :disabled="isProcessing">payer</button>
+            <p v-if="errorMessage">{{ errorMessage }}</p>
             <p>
               Paiement sécurisé Votre banque peut vous demander d'autoriser le paiement pour
               compléter votre achat.
